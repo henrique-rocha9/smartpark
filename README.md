@@ -66,11 +66,7 @@ Observacao: o Wi-Fi virtual do Wokwi pode falhar em algumas redes (faculdade, em
 
 ## Contribuições
 
-| Integrante | Contribuição               |
-| ---------- | -------------------------- |
-| Henrique Giaxa da Rocha     | Idealização do projeto, planejamento do passo a passo de desenvolvimento (roteiro
-das etapas) e implementação no GitHub (repositório, organização dos arquivos,
-README e commits).  |
-| Mateus Rodrigues Fernandes     | Desenvolvimento do projeto (circuito e firmware do ESP32 no Wokwi) e do painel web,
-implementação da API e do banco no Supabase, publicação do painel e gravação do
-vídeo de demonstração. |
+| Integrante | Contribuição |
+| :--- | :--- |
+| Henrique Giaxa da Rocha | Idealização do projeto, planejamento do passo a passo de desenvolvimento (roteiro das etapas) e implementação no GitHub (repositório, organização dos arquivos, README e commits). |
+| Mateus Rodrigues Fernandes | Desenvolvimento do projeto (circuito e firmware do ESP32 no Wokwi) e do painel web, implementação da API e do banco no Supabase, publicação do painel e gravação do vídeo de demonstração. |
