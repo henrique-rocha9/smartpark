@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartPark Sim</title>
+<style>
+body{font-family:sans-serif;max-width:700px;margin:20px auto;padding:0 12px}
+.g{display:flex;gap:10px}
+.c{flex:1;padding:14px;border-radius:8px;color:#fff;text-align:center}
+.c h3{margin:0 0 6px}
+.livre{background:#2e9e5b}
+.ocupada{background:#d33}
+#st{padding:10px;border-radius:6px;margin:12px 0;font-weight:bold;color:#222}
+.ok{background:#e0f5e8}
+.old{background:#ffe3b3}
+.alerta{background:#ffd0d0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{border-bottom:1px solid #ccc;padding:4px;text-align:left}
+</style>
+</head>
+<body>
+<h2>SmartPark Sim</h2>
+<div id="st">Carregando...</div>
+<div class="g" id="cards"></div>
+<p>Última atualização: <b id="ts">-</b></p>
+<h3>Histórico</h3>
+<table>
+<thead><tr><th>Horário</th><th>Vaga</th><th>Status</th><th>Valor</th></tr></thead>
+<tbody id="h"></tbody>
+</table>
+<script>
+const API = "https://yemdtarovczfyyjabmkv.supabase.co/functions/v1/api";
+const LIMITE_S = 10; // dado desatualizado se passar de 10 s sem leitura
+
+async function atualizar() {
+  const st = document.getElementById('st');
+  try {
+    const a = await (await fetch(API + "?r=latest")).json();
+    const h = await (await fetch(API + "?r=history&limit=15")).json();
+    const vs = (a.vagas || []).sort((x, y) => x.vaga - y.vaga);
+
+    document.getElementById('cards').innerHTML = vs.map(v =>
+      `<div class="c ${v.status}"><h3>Vaga ${v.vaga}</h3>${v.status.toUpperCase()}<br>${v.valor ?? '--'} ${v.unidade}</div>`
+    ).join('');
+
+    const ult = vs.length ? new Date(Math.max(...vs.map(v => +new Date(v.criado_em)))) : null;
+    document.getElementById('ts').textContent = ult ? ult.toLocaleString('pt-BR') : '-';
+
+    const idade = ult ? (new Date(a.server_time) - ult) / 1000 : 9999;
+    const lotado = vs.length == 3 && vs.every(v => v.status == 'ocupada');
+
+    if (idade > LIMITE_S) {
+      st.className = 'old';
+      st.textContent = '⚠ DADOS DESATUALIZADOS (sem leitura há ' + Math.round(idade) + ' s)';
+    } else if (lotado) {
+      st.className = 'alerta';
+      st.textContent = '🚨 ALERTA: estacionamento LOTADO';
+    } else {
+      st.className = 'ok';
+      st.textContent = '✔ Dados atualizados';
+    }
+
+    document.getElementById('h').innerHTML = (h.historico || []).map(x =>
+      `<tr><td>${new Date(x.criado_em).toLocaleTimeString('pt-BR')}</td><td>${x.vaga}</td><td>${x.status}</td><td>${x.valor ?? '--'} ${x.unidade}</td></tr>`
+    ).join('');
+  } catch (e) {
+    st.className = 'old';
+    st.textContent = '⚠ Erro ao consultar a API';
+  }
+}
+atualizar();
+setInterval(atualizar, 3000);
+</script>
+</body>
+</html>

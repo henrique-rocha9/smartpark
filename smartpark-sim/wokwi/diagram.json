@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "author": "SmartPark Sim",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+
+    { "type": "wokwi-hc-sr04", "id": "us1", "top": -150, "left": -230, "attrs": { "distance": "100" } },
+    { "type": "wokwi-hc-sr04", "id": "us2", "top": 20,   "left": -230, "attrs": { "distance": "100" } },
+    { "type": "wokwi-hc-sr04", "id": "us3", "top": 190,  "left": -230, "attrs": { "distance": "100" } },
+
+    { "type": "board-ssd1306", "id": "oled", "top": -170, "left": 200, "attrs": { "i2cAddress": "0x3c" } },
+
+    { "type": "wokwi-resistor", "id": "rg1", "top": 60,  "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lg1", "top": 55,  "left": 350, "attrs": { "color": "green" } },
+    { "type": "wokwi-resistor", "id": "rr1", "top": 105, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lr1", "top": 100, "left": 350, "attrs": { "color": "red" } },
+
+    { "type": "wokwi-resistor", "id": "rg2", "top": 150, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lg2", "top": 145, "left": 350, "attrs": { "color": "green" } },
+    { "type": "wokwi-resistor", "id": "rr2", "top": 195, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lr2", "top": 190, "left": 350, "attrs": { "color": "red" } },
+
+    { "type": "wokwi-resistor", "id": "rg3", "top": 240, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lg3", "top": 235, "left": 350, "attrs": { "color": "green" } },
+    { "type": "wokwi-resistor", "id": "rr3", "top": 285, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lr3", "top": 280, "left": 350, "attrs": { "color": "red" } }
+  ],
+  "connections": [
+    [ "us1:VCC", "esp:3V3", "red", [] ],
+    [ "us1:GND", "esp:GND.1", "black", [] ],
+    [ "us1:TRIG", "esp:D13", "green", [] ],
+    [ "us1:ECHO", "esp:D34", "orange", [] ],
+
+    [ "us2:VCC", "esp:3V3", "red", [] ],
+    [ "us2:GND", "esp:GND.1", "black", [] ],
+    [ "us2:TRIG", "esp:D14", "green", [] ],
+    [ "us2:ECHO", "esp:D35", "orange", [] ],
+
+    [ "us3:VCC", "esp:3V3", "red", [] ],
+    [ "us3:GND", "esp:GND.1", "black", [] ],
+    [ "us3:TRIG", "esp:D27", "green", [] ],
+    [ "us3:ECHO", "esp:D32", "orange", [] ],
+
+    [ "oled:GND", "esp:GND.1", "black", [] ],
+    [ "oled:VCC", "esp:3V3", "red", [] ],
+    [ "oled:SCL", "esp:D22", "blue", [] ],
+    [ "oled:SDA", "esp:D21", "purple", [] ],
+
+    [ "esp:D16", "rg1:1", "green", [] ],
+    [ "rg1:2", "lg1:A", "green", [] ],
+    [ "lg1:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:D17", "rr1:1", "red", [] ],
+    [ "rr1:2", "lr1:A", "red", [] ],
+    [ "lr1:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:D18", "rg2:1", "green", [] ],
+    [ "rg2:2", "lg2:A", "green", [] ],
+    [ "lg2:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:D19", "rr2:1", "red", [] ],
+    [ "rr2:2", "lr2:A", "red", [] ],
+    [ "lr2:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:D23", "rg3:1", "green", [] ],
+    [ "rg3:2", "lg3:A", "green", [] ],
+    [ "lg3:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:D25", "rr3:1", "red", [] ],
+    [ "rr3:2", "lr3:A", "red", [] ],
+    [ "lr3:C", "esp:GND.1", "black", [] ]
+  ],
+  "dependencies": {}
+}
